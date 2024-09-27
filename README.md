@@ -30,9 +30,10 @@ As a limited amount of time is available, it seems reasonable that a simple webp
 
 As the information in this example isn't going to be updated etc and is already stored in a JSON file in-memory storage should be sufficient and connecting to a database or an input is unnecessary.
 
-### Container - Docker
+### Design decisions
 
-Docker containers and security for the app is not requested so assumed not required.
+1. Docker containers and security for the app is not requested so assumed not required.
+2. As it is a single page app I am not going to use a base.html to have a standardised format for the headings and footers etc.
 
 pip install Flask
 
