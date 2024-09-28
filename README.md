@@ -34,6 +34,19 @@ As the information in this example isn't going to be updated etc and is already 
 
 1. Docker containers and security for the app is not requested so assumed not required.
 2. As it is a single page app I am not going to use a base.html to have a standardised format for the headings and footers etc.
+3. The rules provided to calculate the leaderboard needed to be done in reverse order for efficiency of the code. Each step would lead to a new list so that the orginal data wasn't compromised.
+- remove any users from the list that had less than 3 submissions which would provide a shorter list and the extraneous data about dates and the name of the challenge which is irrelevant for this challenge. This is unnecessary processing/storing of data not required in this challenge. 
+- reorder the submissions so that it could be cut at 24 submissions and check which ones had more than 24 submissions
+
+
+
+
+Didn't originally have the JSON file so started with the set up of the front end as didn't want to write algorithm for different named variables.
+
+
+The original list had 500 entries (len(score_list)), but once the list had removed all submissions of less than 3 the new list only contained 246 entries, which would require less processing to do the other calculations.
+
+Then had the idea to remove all the additional unused data (name and date from within submission).
 
 pip install Flask
 
