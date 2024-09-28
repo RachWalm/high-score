@@ -8,10 +8,38 @@
     <meta name="author" content="Rachel Walmsley">
 
     <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/script.js"></script>
     <Title>Leaderboard</Title>
 </head>
 <body>
-    <p>testing 123</p>
-    
+    <header>
+        <h1> Leaderboard </h1>
+    </header>
+    <section>
+        <div>
+            <p>put buttons here</p>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Total score</th>
+                </tr>
+                {% for each, score in sum_rank.items() %}
+                    <tr>
+                        <td> {{ each }}</td>
+                        <td> {{ score }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <ol id="high-scores-list">
+                0
+            </ol>
+            {{ sum_rank }}
+            
+        </div>
+    </section>   
 </body>
 </html>
