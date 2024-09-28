@@ -32,10 +32,15 @@ def remove_irrelevant(all_scores):
     return above_three
 
 def process_twentyfour_submissions(name_and_scores):
+    # comprehension to return user and the scores are sorted highest to lowest and cut at 24 entries
     valid_users = {name: sorted(scores, reverse=True)[:24] for name, scores in name_and_scores.items()}
-    scores_only = valid_users.values()
+    return valid_users
     
-   
+def allowed_sum_totals(submissions):
+    # comprehension to return user and sum of scores
+    sum_totals = {name: sum(submission) for name, submission in submissions.items()}
+    print(sum_totals)    
+        
     
 # Use decorators for routing
 # @app.route("/")
@@ -47,5 +52,6 @@ def main():
     score_list = load_scores()
     relevant_data = remove_irrelevant(score_list)
     top_allowed_submissions = process_twentyfour_submissions(relevant_data)
+    sum_totals = allowed_sum_totals(top_allowed_submissions)
     
 main()
