@@ -4,6 +4,8 @@
 
 Initially I was missing the scores.json file mentioned in the pdf. This was requested and provided by Alice Eadle by email.
 
+The request states that it is a python technical test or my first instinct would have been to use Javascript in this instance. For data analysis I normally would prefer python, but Javascript could be used for quick interactivity with the data.
+
 Task copied from request
 
 Using the json data provided, build a web application that has the capability to:
@@ -20,11 +22,13 @@ The data that is required in the leaderboard copied from request
 
 ### Backend
 
-This is a python technical test so python language must be used. Therefore, the data processing will be done on the back end based on python. I am familiar with Flask therefore will use Flask for data handling.
+This is a python technical test so python language must be used. Therefore, the data processing will be done on the back end based on python. I am familiar with Flask therefore will use Flask for data handling. Django could be used but would take longer and for this simple page isn't necessary
 
 ### FrontEnd
 
-As a limited amount of time is available, it seems reasonable that a simple webpage will suffice. User accounts or confidentiality seems excessive as logically you want to display the top scores for everyone to see. Therefore, using just HTML and CSS initially. If interactivity is later decided upon (rather than just a display) JavaScript can be used. But this will be time dependent when calculated data is displayed.
+As a limited amount of time is available, it seems reasonable that a simple webpage will suffice. User accounts or confidentiality seems excessive as logically you want to display the top scores for everyone to see. Therefore, using just HTML and CSS initially. 
+
+If interactivity is later decided upon (rather than just a display) JavaScript can be used. But this will be time dependent when calculated data is displayed.
 
 ### Storage
 
@@ -193,7 +197,11 @@ Flask allows you to pass data to the website so the result was passed to index.h
 
 The HTML was then written using a for loop to generate the table with the data in it.
 
-The CSS was added to make the site more user appealing and readable.
+The CSS was added to make the site more user appealing and readable. Google fonts used to adjust the fonts and the background image was taken from freepiks.
+
+The [background](https://www.freepik.com/free-vector/flat-silver-stars-background_35106367.htm#fromView=search&page=1&position=32&uuid=826f9658-da69-4c65-b21c-94ad61531a03) image was from freepiks.
+
+Set up responsiveness with media queries. Setting up bootstrap would have taken me too long. I thought that this was something that would add value that I could quickly do with the time I had left.
 
 #### Testing
 
@@ -203,9 +211,29 @@ The CSS was added to make the site more user appealing and readable.
 
 - Manually calculated the lowest ranked user (3 submissions) summed score of 73 which matched what was displayed on the website. 
 
+## Final thoughts
 
+### Learnings
+
+First time that I have done data processing and passed it to a website using Flask for the routing. Great learning experience.
+
+I expected once I had finished studying that I would be mostly working with Django, React and Bootstrap for coding, but for a small project like this it was more work, it is great for scaling.
+
+### Difficulties/ Things I would work on with more time
+
+Main bugs were jumping back and forth from lists and dictionaries and picking the wrong data when selecting things from nested dictionaries.
 
 Doesn't take account if they are the same score.
+
+Javascript would allow us to do weighting in different tables by clicking buttons.
+
+Pagination
+
+Tables for averages and weighting, and tables for top 10 or top 3.
+
+Enter score updates is not available it would need a new JSON file each time.
+
+Wasn't sure what was meant by store.
 
 pip install Flask
 

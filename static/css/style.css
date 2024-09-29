@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(187, 202, 223);
+    background-image: url("/static/stars.jpg");
+    background-size: contain;
     color:rgb(0, 0, 92);
 }
 
@@ -8,6 +9,7 @@ div {
 }
 
 table {
+    background-color: lightblue;
     border: 5px solid;
     border-color: grey;
 }
@@ -26,7 +28,8 @@ tr:hover {
 }
 
 h1 {
-    color:blue ;
+    color:rgb(8, 119, 223);
+    font-size: 150px;
 }
 
 header {
@@ -35,10 +38,57 @@ header {
     justify-content: center;
 }
 
+.fredoka-header {
+    font-family: "Fredoka", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-size: large;
+}
+
+.mulish-table {
+    font-family: "Mulish", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 25px;
+}
+
 .rank-table {
     width: 100vw;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+}
+
+#ranking-table {
+    width: 33vw;
+}
+
+@media screen and (max-width:1400px) {
+    .mulish-table {
+        font-size: 15px;
+    }
+}
+
+
+@media screen and (max-width:1024px) {
+    h1 {
+        font-size: 75px;
+    }
+
+    .mulish-table {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    h1 {
+        font-size: 45px;
+    }
+
+    #ranking-table {
+        width: 50vw;
+    }
 }
