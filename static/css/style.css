@@ -1,3 +1,44 @@
 body {
-    background-color: rgb(211, 185, 238);
+    background-color: rgb(187, 202, 223);
+    color:rgb(0, 0, 92);
+}
+
+div {
+    overflow-x:auto;
+}
+
+table {
+    border: 5px solid;
+    border-color: grey;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: center;
+}
+
+tr:nth-child(even) {
+    background-color:rgb(216, 229, 247);
+}
+
+tr:hover {
+    background-color: aquamarine;
+}
+
+h1 {
+    color:blue ;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank-table {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }

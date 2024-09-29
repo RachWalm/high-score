@@ -15,11 +15,11 @@
     <header>
         <h1> Leaderboard </h1>
     </header>
-    <section>
+    <section class="flex-container">
         <div>
             <p>put buttons here</p>
         </div>
-        <div>
+        <div class="rank-table">
             <table>
                 <tr>
                     <th>Name</th>
@@ -32,13 +32,6 @@
                     </tr>
                 {% endfor %}
             </table>
-        </div>
-        <div>
-            <ol id="high-scores-list">
-                0
-            </ol>
-            {{ sum_rank }}
-            
         </div>
     </section>   
 </body>

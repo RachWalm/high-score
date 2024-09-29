@@ -40,7 +40,7 @@ def to_dict(lsts):
     res_dict = {}
     for lst in lsts:
         keys = str(lst[::2])[2:-3]
-        values = lst[1::2]
+        values = str(lst[1::2])[1:-2]
         # print(keys)
         # print(values)
         res_dict[keys] = values
@@ -71,7 +71,7 @@ def main():
     # Use decorators for routing
     @app.route("/")
     def index():
-        # Load scores from provided JSON file for 
+        # Load scores to web page using sum_rank value
         return render_template("index.html", sum_rank=sum_rank)
     
 main()
