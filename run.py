@@ -75,13 +75,37 @@ def ranking(unordered):
     return ordered
 
 
+# Function attempted to deal with duplicate scores to be removed before
+# deployment. For assessment information only.
+# def two_people_one_value (people_and_scores):
+#     # Can't adjust length of dictionary in iterations -> copy
+#     people_and_score = people_and_scores.copy()
+#     unique_score = {}
+#     first = 0 # trying to figure out where the pop would work
+#     for person, score in people_and_score.items():
+#         # First iteration through to give value to compare
+#         first = 1
+#         for people, scores in people_and_score.items():
+#             # Second iteration through to give second value
+#             first = 2
+#             if (score == scores) and (person != people):
+#                 # create new dictionary entry with both names 
+#                 key = str(person) + " and " + str(people)
+#                 unique_score[key] = score
+#                 first = 3
+#                 print(first)
+#             elif score != scores:
+#                 unique_score[people] = scores
+#     return unique_score
+
+
 def main():
     score_list = load_scores()  # load data from JSON file
     relevant_data = remove_irrelevant(score_list)
     top_allowed_submissions = process_twentyfour_submissions(relevant_data)
     sum_totals = allowed_sum_totals(top_allowed_submissions)  # Gives sum value
     sum_rank_list = ranking(sum_totals)  # Gives result in order in a list
-    sum_rank = to_dict(sum_rank_list)  # Changes it to dictionary
+    sum_rank = to_dict(sum_rank_list) # Changes it to dictionary
 
     # Use decorators for routing
     @app.route("/")

@@ -1,10 +1,18 @@
-# High Score
+# Leaderboard
+
+Welcome to Leaderboard
+
+![large](/static/document/Large-monitor-1920x1080.png)
+![ipad](/static/document/iPad-768x1024.png)
+![iphone](/static/document/iPhone-6-7-8-375x667.png)
 
 ## Planning
 
-Initially I was missing the scores.json file mentioned in the pdf. This was requested and provided by Alice Eadle by email.
+Timescale - E-mail containing interview date and task sent to me late Thursday and read on Friday morning. Interview was set for Tuesday, with time required for review of my work before interview. This gave me the timescale.
 
-The request states that it is a python technical test or my first instinct would have been to use Javascript in this instance. For data analysis I normally would prefer python, but Javascript could be used for quick interactivity with the data.
+Initially I was missing the scores.json file mentioned in the pdf. This was requested and provided by Alice Eadle by email on Friday morning.
+
+The request states that it is a python technical test or my first instinct would have been to use Javascript in this instance (although once I saw the JSON file it was larger than I expected to put into local storage). For data analysis I normally would prefer python, but Javascript could be used for quick interactivity between the data and web page.
 
 Task copied from request
 
@@ -22,7 +30,7 @@ The data that is required in the leaderboard copied from request
 
 ### Backend
 
-This is a python technical test so python language must be used. Therefore, the data processing will be done on the back end based on python. I am familiar with Flask therefore will use Flask for data handling. Django could be used but would take longer and for this simple page isn't necessary
+This is a python technical test so python language must be used. Therefore, the data processing will be done on the back end based on python. I am familiar with Flask therefore will use Flask for routing. Django could be used but would take longer and for this simple page isn't necessary.
 
 ### FrontEnd
 
@@ -32,11 +40,11 @@ If interactivity is later decided upon (rather than just a display) JavaScript c
 
 ### Storage
 
-As the information in this example isn't going to be updated etc and is already stored in a JSON file in-memory storage should be sufficient and connecting to a database or an input is unnecessary.
+As the information in this example isn't going to be updated etc and is already stored in a JSON file in-memory storage should be sufficient. Connecting to a database or an input is unnecessary/not requested.
 
 ### Design decisions
 
-1. Docker containers, user accounts and security for the app is not requested so assumed not required. I am aware of Docker and know it would make it easier to run from machine to machine, but I haven't ever used it to build an image etc. with the restricted timescale this won't be included in the project.
+1. Docker containers, user accounts and security for the app is not requested so assumed not required. I am aware of Docker and know it would make it easier to run from machine to machine, but I haven't ever used it to build an image etc. with the restricted timescale this won't be included in the project. I have Docker installed on my machine and a course downloaded but haven't started it yet.
 2. As it is a single page app I am not going to use a base.html to have a standardised format for the headings and footers etc across the site.
 3. The rules provided to calculate the leaderboard needed to be done in reverse order for efficiency of the code. Each step would lead to a new list so that the original data wasn't compromised, with the new list being smaller and simpler than the previous so the processing reduces.
 Therefore the processing needs to be done per function:
@@ -73,8 +81,8 @@ Then I got the data and wanted to get that processed as the top priority, as it 
 
 1. That is a good question that I am happy you asked. If you want to include some weighting or some visual hint to help with that problem and make it clearer in the UI, definitely do so. Or equally if you just provide a description of what else you would do, that is also perfectly valid.
 2. To be honest this is actually part of the test, to see if people consider it. So yes, a Git repository (gihtub link or equivalent) that contains all someone needs to understand and assess your work is enough. 
-3. In terms of deploying it, you don’t need to do that but also feel free to do so if you wish and you think it would add a benefit. -  Like above, putting some thought into how you would do it  (or some notes in the repository with options/ideas) so we can discuss it in the interview would be good.
-For that one, what I am looking for is people making a decision on priorities and what is worth doing vs not, then being able to justifying either in some documentation or in the interview later.
+In terms of deploying it, you don’t need to do that but also feel free to do so if you wish and you think it would add a benefit. -  Like above, putting some thought into how you would do it  (or some notes in the repository with options/ideas) so we can discuss it in the interview would be good.
+3. For that one, what I am looking for is people making a decision on priorities and what is worth doing vs not, then being able to justifying either in some documentation or in the interview later.
 
 #### Set up
 
@@ -113,7 +121,7 @@ This would also mean if there was plenty of time left over I could do some of th
 
 As per design the first step was to remove the many with under 3 submissions so that we are processing less data. The original list had 500 entries, but once the list had removed all submissions of less than 3 the new list only contained 246 entries, which would require less processing to do the other calculations.
 
-Then had the idea to remove all the additional unused data (name and date from within submission). This would again reduce the size of the data and limit processing and functions having to work round the data that wasn't going to be displayed.
+Then had the idea to remove all the additional unused data (name and date from within submission nested dictionary). This would again reduce the size of the data and limit processing and functions having to work round the data that wasn't going to be displayed.
 
 ```py
 # removes data with less than 3 submissions and irrelevant information on submission name and date
@@ -151,7 +159,7 @@ def process_twentyfour_submissions(name_and_scores):
     return valid_users
 ```
 
-This used comprehension. The input by this point was the person and all the scores. I realised afterwards when looking back at the data that it could be confusing that I had used the word "name" in variables to signify the person which was the key for some of the nested data. If I had noticed this earlier I would have changed it.
+This used comprehension. The input variable by this point was the person and all the scores. I realised afterwards when looking back at the data that it could be confusing that I had used the word "name" in variables to signify the person which was the key for some of the nested data. If I had noticed this earlier I would have changed it.
 
 The function takes each {key: value} pair as name_and_scores.items() and considers the key = name and the value = score. It then outputs name: and a processed set of numbers which is sorted with highest first (sorted reverse = True). It then cuts it at using indexes [:24] which as it is sorted drops the lowest values.
 
@@ -175,7 +183,7 @@ def ranking(unordered):
     return ordered
 ```
 
-I wanted the data as a dictionary so converted to a dictionary and removed the extra punctuation.
+I wanted the data as a dictionary so converted to a dictionary and removed the extra punctuation. NOTE : python dictionaries before version 3.7 are not ordered so this will break if a lower version of python is used.
 
 ```py
 def to_dict(lsts):
@@ -201,11 +209,13 @@ The CSS was added to make the site more user appealing and readable. Google font
 
 The [background](https://www.freepik.com/free-vector/flat-silver-stars-background_35106367.htm#fromView=search&page=1&position=32&uuid=826f9658-da69-4c65-b21c-94ad61531a03) image was from freepiks.
 
-Set up responsiveness with media queries. Setting up bootstrap would have taken me too long. I thought that this was something that would add value that I could quickly do with the time I had left.
+Set up responsiveness with media queries. Setting up bootstrap would have taken me too long compared to css for a single page. I thought that css responsiveness was something that would add value that I could quickly do with the time I had left.
 
 #### Testing
 
 - Checked that when the users that had less than 3 submissions function had run that it had changed from a dictionary of length 500 to a length of 246.
+
+- Checked that the value of the sum scores went down in order
 
 - Manually calculated the top ranked user with a calculator and got a total score once the lowest submissions (30 total submissions) had been removed found a summed score of 4025 which matched what was displayed on the website.
 
@@ -215,27 +225,48 @@ Set up responsiveness with media queries. Setting up bootstrap would have taken 
 
 ### Learnings
 
-First time that I have done data processing and passed it to a website using Flask for the routing. Great learning experience.
+First time that I have done data processing and passed it to a website using Flask for the routing. Great learning experience. I did play around with trying to get the data to Javascript so that I could set up buttons if there was time that gave different outputs.
 
-I expected once I had finished studying that I would be mostly working with Django, React and Bootstrap for coding, but for a small project like this it was more work, it is great for scaling.
+I expected once I had finished studying that I would be mostly working with Django, React and Bootstrap for coding, but for a small project like this it was more work, it is great for scaling. I had never considered how scale mattered.
 
 ### Difficulties/ Things I would work on with more time
 
 Main bugs were jumping back and forth from lists and dictionaries and picking the wrong data when selecting things from nested dictionaries.
 
-Doesn't take account if they are the same score.
+Doesn't take account if they are the same score. I did start a function but ran out of time to complete it to put two people's achievement on the same line.
 
-Javascript would allow us to do weighting in different tables by clicking buttons.
+```py
+def two_people_one_value (people_and_scores):
+    people_and_score = people_and_scores.copy()
+    unique_score = {}
+    first = 0
+    for person, score in people_and_score.items():
+        first = 1
+        for people, scores in people_and_score.items():
+            first = 2
+            if (score == scores) and (person != people):
+                key = str(person) + " and " + str(people)
+                unique_score[key] = score
+                first = 3
+                print(first)
+            elif score != scores:
+                unique_score[people] = scores
+    return unique_score
+```
 
-Pagination
+Unfortunately this gave me a variety of the two names over four lines instead, I tried pop and delete but without success. It may need to be processed in a different part of the function than I was attempting.
 
-Tables for averages and weighting, and tables for top 10 or top 3.
+![multiple](/static/document/multiple.png)
 
-Enter score updates is not available it would need a new JSON file each time.
+As this was a last thing I was doing and time was running out, I put this function on hold. Hopefully to be a learning experience for the future. Although it is possible that the as I was using the browser for the output and refreshing, the data was changing but potentially a hard refresh might have cleared anything that was making the changes not show.
 
-Wasn't sure what was meant by store.
+Javascript would allow us to do weighting in different tables by clicking buttons. Some time was spent attempting to get the data into a variable in JavaScript but I couldn't figure it out and was going in circles so decided to work on features with more potential of success. I have never attempted to use flask and Javascript together before and although I am sure that there is an easy way to do it the only way that I could see would be to write the output of the python functions to another JSON file and then load and store that in a variable in JavaScript variable. I have to assume that the scores would be updating regularly and lots of JSON files for one set of tables didn't seem like an effective way to proceed.
 
-pip install Flask
+Pagination would have meant that it wasn't just one huge list loading at once. So this is definitely something that I would set up for user ease and can be done with CSS.
+
+Tables for averages and weighting, and tables for top 10 or top 3, I believe might have been of interest to the user and could have been done with a function in python for the averages and weighting or top 3 and top 10 with local storage and Javascript buttons to switch between them. But as I didn't manage to figure out the Javascript side of things this was left.
+
+Enter score updates is not available. It would need a new JSON file each time for the way that it is set up at the moment. But as updates was not part of the specification I have not looked into that. I am sure it is an essential feature though.
 
 ## Technologies used
 
