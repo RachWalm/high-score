@@ -14,7 +14,7 @@ Initially I was missing the scores.json file mentioned in the pdf. This was requ
 
 The request states that it is a python technical test or my first instinct would have been to use Javascript in this instance (although once I saw the JSON file it was larger than I expected to put into local storage). For data analysis I normally would prefer python, but Javascript could be used for quick interactivity between the data and web page.
 
-Task copied from request
+### Task copied from request
 
 Using the json data provided, build a web application that has the capability to:
 - Load, process and store the json data in the system
@@ -30,7 +30,7 @@ The data that is required in the leaderboard copied from request
 
 ### Backend
 
-This is a python technical test so python language must be used. Therefore, the data processing will be done on the back end based on python. I am familiar with Flask therefore will use Flask for routing. Django could be used but would take longer and for this simple page isn't necessary.
+This is a python technical test so python language must be used. Therefore, the data processing will be done on the back end based on python. I am familiar with Flask therefore will use Flask for routing. I could use Django but would take longer and for this simple page isn't necessary.
 
 ### FrontEnd
 
@@ -40,22 +40,22 @@ If interactivity is later decided upon (rather than just a display) JavaScript c
 
 ### Storage
 
-As the information in this example isn't going to be updated etc and is already stored in a JSON file in-memory storage should be sufficient. Connecting to a database or an input is unnecessary/not requested.
+As the information in this example isn't going to be updated etc and is already stored in a JSON file, variable storage should be sufficient. Connecting to a database or an input is unnecessary/not requested.
 
 ### Design decisions
 
 1. Docker containers, user accounts and security for the app is not requested so assumed not required. I am aware of Docker and know it would make it easier to run from machine to machine, but I haven't ever used it to build an image etc. with the restricted timescale this won't be included in the project. I have Docker installed on my machine and a course downloaded but haven't started it yet.
 2. As it is a single page app I am not going to use a base.html to have a standardised format for the headings and footers etc across the site.
 3. The rules provided to calculate the leaderboard needed to be done in reverse order for efficiency of the code. Each step would lead to a new list so that the original data wasn't compromised, with the new list being smaller and simpler than the previous so the processing reduces.
-Therefore the processing needs to be done per function:
+Therefore the anticipated processing that needs to be done per function:
 - remove any users from the list that had less than 3 submissions which would provide a shorter list. This reduced the amount of data that we are processing in future steps. 
 - reorder the "submissions" with largest first so that it could be cut at 24 submissions. Check which ones had more than 24 submissions from the original data so that testing can look at those.
-- sum the submissions keeping them attached to the person who submitted.
-- display it on an HTML page using decorators for routing.
+- sum the submissions keeping them attached to the person who submitted the submission.
+- display it on an HTML page using decorators for routing in Flask.
 
 ##  Development process
 
-Didn't originally have the JSON file so started with the set up of the front end as didn't want to write algorithm for different named variables.
+Didn't originally have the JSON file, so started with the set up of the front end as didn't want to write algorithm for different named variables.
 
 Set up flask and the routing to produce a HTML page with "hello world!". The function to do this finally became:
 
@@ -88,11 +88,11 @@ In terms of deploying it, you don’t need to do that but also feel free to do s
 
 A github repository was set up and will be committed to regularly.
 
-Once I had the python connected to a web page as that was the intended display method the data was the priority.
+I had the python connected to a web page. Data features then processing was the priority.
 
 #### Data
 
-The data was looked at and the important factors are:
+The data was looked at manually. The important factors are:
 
 The original list had 500 entries (len(score_list)).
 
@@ -104,7 +104,7 @@ This means that the functionality to filter out the less than 3 submissions and 
 
 The data was save in VSCode file system /data/scores.json
 
-To allow it to be used for processing:
+To allow it to be used for processing it was loaded by:
 
 ```py
 # Gets all the data from the JSON file
@@ -117,7 +117,7 @@ def load_scores():
 
 Wrote a "main()" app which had a variable to store the returned value from each function. Although we are summing the values as stated in the rules it seemed sensible to make each function modular so the function could be used for other things such as averages or top submission by writing the relevant code and inputting the variable from the stage of the program that was appropriate.
 
-This would also mean if there was plenty of time left over I could do some of the outputs that I thought might be valuable - average / weighting rather than sum are often used.
+This would also mean if there was plenty of time left over I could do some of the outputs that I thought might be valuable - average / weighting rather than sum.
 
 As per design the first step was to remove the many with under 3 submissions so that we are processing less data. The original list had 500 entries, but once the list had removed all submissions of less than 3 the new list only contained 246 entries, which would require less processing to do the other calculations.
 
@@ -148,7 +148,7 @@ def remove_irrelevant(all_scores):
     return above_three
 ```
 
-As the process of producing this code is of interest to the reader I have left in the code I used to delve through the data and consider the data that had submissions greater than 24 so would require only top submissions being used in the calculation but it is commented out. This allowed me to anticipate what difference the future function would make to the data.
+As the process of producing this code is of interest to the reader: I have left in the code I used to delve through the data / consider the data that had submissions greater than 24, as that data would require only top submissions being used in the calculation (but it is commented out). This allowed me to anticipate what difference the future removal of lowest scores function would make to the data.
 
 Next function was to have narrow down the data to just taking the top 24 submissions. 
 
@@ -159,9 +159,9 @@ def process_twentyfour_submissions(name_and_scores):
     return valid_users
 ```
 
-This used comprehension. The input variable by this point was the person and all the scores. I realised afterwards when looking back at the data that it could be confusing that I had used the word "name" in variables to signify the person which was the key for some of the nested data. If I had noticed this earlier I would have changed it.
+This used comprehension. The input variable by this point was the person and all the scores. I realised afterwards when looking back at the data that it could be confusing that I had used the word "name" in variables to signify the person which was also the word used for the key for some of the nested data. If I had noticed this earlier I would have changed it.
 
-The function takes each {key: value} pair as name_and_scores.items() and considers the key = name and the value = score. It then outputs name: and a processed set of numbers which is sorted with highest first (sorted reverse = True). It then cuts it at using indexes [:24] which as it is sorted drops the lowest values.
+The function takes each {key: value} pair as name_and_scores.items() and considers the key = name and the value = score. It then outputs name: and a processed set of numbers which is sorted with highest first (sorted reverse = True). It then cuts it at using indexes [:24] which allows only the highest scores to remain. As it is sorted and cuts the end it drops the lowest values.
 
 The next function needs to calculate the sum of integers in the value section. So iterates over the scores and adds them together.
 
@@ -203,13 +203,13 @@ Flask allows you to pass data to the website so the result was passed to index.h
 
 #### Website
 
-The HTML was then written using a for loop to generate the table with the data in it.
+The HTML was then written using a "for" loop to generate the table with the data in it.
 
 The CSS was added to make the site more user appealing and readable. Google fonts used to adjust the fonts and the background image was taken from freepiks.
 
 The [background](https://www.freepik.com/free-vector/flat-silver-stars-background_35106367.htm#fromView=search&page=1&position=32&uuid=826f9658-da69-4c65-b21c-94ad61531a03) image was from freepiks.
 
-Set up responsiveness with media queries. Setting up bootstrap would have taken me too long compared to css for a single page. I thought that css responsiveness was something that would add value that I could quickly do with the time I had left.
+I had a small amount of time to get something productive done so set up responsiveness with media queries. Setting up bootstrap would have taken me too long compared to css for a single page. I thought that css responsiveness was something that would add value that I could quickly do with the time I had left.
 
 #### Testing
 
@@ -225,15 +225,18 @@ Set up responsiveness with media queries. Setting up bootstrap would have taken 
 
 ### Learnings
 
-First time that I have done data processing and passed it to a website using Flask for the routing. Great learning experience. I did play around with trying to get the data to Javascript so that I could set up buttons if there was time that gave different outputs.
+First time that I have done data processing and passed it to a website using Flask for the routing. Great learning experience. I did play around with trying to get the data to Javascript so that I could set up buttons if there was time that gave different outputs. My Javascript attempts were not successful.
 
-I expected once I had finished studying that I would be mostly working with Django, React and Bootstrap for coding, but for a small project like this it was more work, it is great for scaling. I had never considered how scale mattered.
+I expected once I had finished studying that I would be mostly working with Django, React and Bootstrap for coding, but for a small project like this those frameworks would be more work. However, I have used them on bigger projects as it is great for scaling. I had never considered how scale mattered.
 
 ### Difficulties/ Things I would work on with more time
 
 Main bugs were jumping back and forth from lists and dictionaries and picking the wrong data when selecting things from nested dictionaries.
 
-Doesn't take account if they are the same score. I did start a function but ran out of time to complete it to put two people's achievement on the same line.
+I was over ambitious with my suggestions of extra work. To do averages or weighting I would use additional libraries such as statistics.mean() module or Numpy or SciPy or Pandas. 
+To deploy I would put it on to Heroku as the only places I have deployed to are Heroku and Git. Git can only take static pages so the calculations in python wouldn't work.
+
+A bit problem I notices just before the end is the output doesn't take account if they are the same score. I did start a function but ran out of time to complete it to put two people's achievement on the same line.
 
 ```py
 def two_people_one_value (people_and_scores):
@@ -258,11 +261,11 @@ Unfortunately this gave me a variety of the two names over four lines instead, I
 
 ![multiple](/static/document/multiple.png)
 
-As this was a last thing I was doing and time was running out, I put this function on hold. Hopefully to be a learning experience for the future. Although it is possible that the as I was using the browser for the output and refreshing, the data was changing but potentially a hard refresh might have cleared anything that was making the changes not show.
+As this was a last thing I was doing and time was running out, I put this function on hold. Hopefully to be a learning experience for the future. Although it is possible that as I was using the browser for the output and refreshing, the data was changing but potentially a hard refresh might have cleared anything that was making the changes not show.
 
-Javascript would allow us to do weighting in different tables by clicking buttons. Some time was spent attempting to get the data into a variable in JavaScript but I couldn't figure it out and was going in circles so decided to work on features with more potential of success. I have never attempted to use flask and Javascript together before and although I am sure that there is an easy way to do it the only way that I could see would be to write the output of the python functions to another JSON file and then load and store that in a variable in JavaScript variable. I have to assume that the scores would be updating regularly and lots of JSON files for one set of tables didn't seem like an effective way to proceed.
+Javascript would allow us to do weighting in different tables by clicking buttons. Some time was spent attempting to get the data into a variable in JavaScript but I couldn't figure it out and was going in circles so decided to work on features with more potential of success. I have never attempted to use flask and Javascript together before. Although I am sure that there is an easy way to do it, the only way that I could see would be to write the output of the python functions to another JSON file and then load and store that in a variable in JavaScript. I have to assume that the scores would be updating regularly and lots of JSON files for one set of tables didn't seem like an effective way to proceed.
 
-Pagination would have meant that it wasn't just one huge list loading at once. So this is definitely something that I would set up for user ease and can be done with CSS.
+Pagination would have meant that it wasn't just one huge list loading at once. So this is definitely something that I would set up for user ease.
 
 Tables for averages and weighting, and tables for top 10 or top 3, I believe might have been of interest to the user and could have been done with a function in python for the averages and weighting or top 3 and top 10 with local storage and Javascript buttons to switch between them. But as I didn't manage to figure out the Javascript side of things this was left.
 
